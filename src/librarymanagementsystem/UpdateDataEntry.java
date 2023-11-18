@@ -44,13 +44,14 @@ public class UpdateDataEntry extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
+        txtSemester = new javax.swing.JTextField();
+        txtStudentName = new javax.swing.JTextField();
+        txtFatherName = new javax.swing.JTextField();
+        txtUsername = new javax.swing.JTextField();
+        txtInstituteName = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -99,13 +100,18 @@ public class UpdateDataEntry extends javax.swing.JFrame {
 
         jLabel7.setText("Institute");
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 200, -1, -1));
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 230, 140, -1));
-        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 110, 140, -1));
-        getContentPane().add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 140, 140, -1));
-        getContentPane().add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 170, 140, -1));
-        getContentPane().add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 200, 140, -1));
+        getContentPane().add(txtSemester, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 230, 140, -1));
+        getContentPane().add(txtStudentName, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 110, 140, -1));
+        getContentPane().add(txtFatherName, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 140, 140, -1));
+        getContentPane().add(txtUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 170, 140, -1));
+        getContentPane().add(txtInstituteName, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 200, 140, -1));
 
         jButton2.setText("Edit");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 270, -1, -1));
 
         jButton3.setText("Search");
@@ -115,6 +121,14 @@ public class UpdateDataEntry extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 270, -1, -1));
+
+        jButton4.setText("Delete");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 270, -1, -1));
 
         pack();
         setLocationRelativeTo(null);
@@ -152,6 +166,43 @@ public class UpdateDataEntry extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        String studentName = txtStudentName.getText();
+        String fatherName = txtFatherName.getText();
+        String username= txtUsername.getText();
+        String semester = txtSemester.getText();
+        String instituteName = txtInstituteName.getText();
+        
+          try {
+            Connection con =  DriverManager.getConnection("jdbc:mysql://localhost:3306/lms","root","password");
+            String Sql = "update `dataentry` SET `student_name`='"+studentName+"', `father_name`='"+ fatherName + "', `semester`='"+semester+"', `username`='"+username+"', `institute_name`='"+instituteName+ "' WHERE username = '"+ username+ "'" ;
+            PreparedStatement ptst = con.prepareStatement(Sql);
+            ptst.execute();
+            JOptionPane.showMessageDialog(null, "Data edited");
+          } catch(Exception e) {
+              JOptionPane.showMessageDialog(null, e);
+          }
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        String username = txtUsername.getText();
+        
+          try {
+            Connection con =  DriverManager.getConnection("jdbc:mysql://localhost:3306/lms","root","password");
+            String sql  = "Delete FROM `dataentry` WHERE username ='"+ username+"'";
+            Statement st = con.createStatement();
+            PreparedStatement ptst = con.prepareStatement(sql);
+            ptst.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Record has been deleted!!");
+            
+          } catch(Exception e){
+              JOptionPane.showMessageDialog(null, e);
+          }
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -192,6 +243,7 @@ public class UpdateDataEntry extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -201,10 +253,10 @@ public class UpdateDataEntry extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField txtFatherName;
+    private javax.swing.JTextField txtInstituteName;
+    private javax.swing.JTextField txtSemester;
+    private javax.swing.JTextField txtStudentName;
+    private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 }
